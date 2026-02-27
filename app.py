@@ -1161,7 +1161,10 @@ if page == "Check-In":
     st.divider()
     st.subheader("Weekly Summary")
     st.caption("A gentle recap from your last 7 days.")
-
+    # Public demo AI notice
+    if not client:
+        st.info("AI features are disabled in the public demo. Run locally with an API key to enable.")
+     
     if "user_weekly_summary" not in st.session_state:
         st.session_state["user_weekly_summary"] = ""
 
@@ -1483,7 +1486,10 @@ elif page == "Clinician Summary":
         # AI session prep (uses FULL selected date range, but compressed)
         # ----------------------------
         st.subheader("AI session prep")
-
+        # Public demo AI notice
+        if not client:
+            st.info("AI features are disabled in the public demo. Run locally with an API key to enable.")    
+ 
         colA, colB, colC = st.columns([1, 1, 1])
         make_snapshot = colA.button("Generate summary ✨")
         make_details = colB.button("Prep notes + Conversation starters")
