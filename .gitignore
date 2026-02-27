@@ -1,0 +1,36 @@
+# --- Secrets ---
+.env
+.streamlit/secrets.toml
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# --- Virtual env ---
+venv/
+.venv/
+
+# --- OS files ---
+.DS_Store
+
+# --- Streamlit ---
+.streamlit/
+
+# --- Local data / databases ---
+data/
+*.db
+*.sqlite
+*.sqlite3
+
+# --- Logs / misc ---
+*.log
+
+# --- Exports / local backups ---
+entries.csv
+entries*.csv
+events.csv
+events*.csv
+entries_backup.csv
+entries_real_backup.csv
