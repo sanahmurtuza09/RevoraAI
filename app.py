@@ -1007,13 +1007,17 @@ if page == "Check-In":
     st.markdown(
         """
         <div style="padding:16px;border-radius:14px;background:#f6f7fb;">
-        <b>Quick daily check-in.</b><br>
-         Log how you feel in 10 seconds and add event check-ins anytime something shifts. Generate a weekly summary when you want it.
+          <div style="font-weight:700; font-size:16px; margin-bottom:6px;">
+            Quick daily check-in.
+          </div>
+          <div style="font-size:14px; line-height:1.45;">
+            Log how you feel in 10 seconds and add event check-ins anytime something shifts.<br/>
+            Generate a weekly summary when you want it.
+          </div>
         </div>
         """,
         unsafe_allow_html=True,
     )
-
     st.divider()
 
     # Always refresh data for this page (so recent table + metrics update immediately)
@@ -1154,6 +1158,11 @@ if page == "Check-In":
                     delete_entry(entry_id)
                 st.success("Deleted.")
                 st.rerun()
+
+    st.info(
+        "Transparency note: Therapists receive concise AI-generated summaries and pattern insights "
+        "to help guide sessions. Your reflections are synthesized into themes rather than shown as raw transcripts."
+    )
 
     # ----------------------------
     # GENERATE SUMMARY (BOTTOM BUTTON)
@@ -1323,7 +1332,9 @@ elif page == "Clinician Summary":
         # ----------------------------
         # Tile display (clinician-oriented, non-duplicative)
         # ----------------------------
-        st.subheader(f"Snapshot ({start_day} → {end_day})")
+        pretty_range = f"{start_day.strftime('%b %d, %Y')} – {end_day.strftime('%b %d, %Y')}"
+        st.subheader("Session Snapshot")
+        st.caption(f"Selected range: {pretty_range}")
         st.caption("All metrics below reflect only the selected date range.")
         st.markdown("<br>", unsafe_allow_html=True)
 
@@ -1685,20 +1696,17 @@ elif page == "Dashboard":
 
         label = f"{start_day} → {end_day}"
         end_inclusive = end_day
+
         # ----------------------------
-        # METRICS (TOP, ACCURATE FOR SELECTED PERIOD)
+        # METRICS (ACCURATE FOR SELECTED RANGE)
         # ----------------------------
-        if df_view.empty:
-            total_checkins = 0
-            active_days = 0
-            avg_mood = 0.0
-            event_checkins = 0
-        else:
-            total_checkins = len(df_view)  # daily + event
-            active_days = df_view["day"].nunique()
-            daily_only = df_view[df_view["entry_type"] == "daily"]
-            avg_mood = round(float(daily_only["mood"].mean()), 1) if not daily_only.empty else 0.0
-            event_checkins = int((df_view["entry_type"] == "event").sum())
+        total_checkins = int(len(df_view))  # daily + event
+        active_days = int(df_view["day"].nunique())
+
+        daily_only = df_view[df_view["entry_type"] == "daily"]
+        avg_mood = round(float(daily_only["mood"].mean()), 1) if not daily_only.empty else 0.0
+
+        event_checkins = int((df_view["entry_type"] == "event").sum())
 
         t1, t2, t3, t4 = st.columns(4)
         t1.metric("Average mood", avg_mood)
@@ -1706,11 +1714,47 @@ elif page == "Dashboard":
         t3.metric("Total check-ins", total_checkins)
         t4.metric("Event check-ins", event_checkins)
 
-        # Motivational banner
-        render_dashboard_banner(avg_mood if daily_only is not None else None)
+        # ----------------------------
+        # Motivational banner (random each refresh)
+        # ----------------------------
+        import random
+
+        messages = [
+            "Start with one quick check-in today. Small steps count.",
+            "Strong consistency this week, keep it simple and keep going.",
+            "Nice momentum over the last few weeks. You’re building a real pattern.",
+            "Low-pressure goal: aim for 2 check-ins this week, that’s enough to spot patterns.",
+            "Your baseline looks steady. Protect what’s working.",
+            "Looks like a tougher stretch, consider smaller days and more recovery time.",
+            "Lots of moments tracked, you’re noticing shifts, which is progress.",
+            "Nice momentum. Keep building on what’s working.",
+        ]
+
+        banner_line = random.choice(messages)
+
+        st.markdown(
+            f"""
+            <div style="
+                padding:16px 18px;
+                border-radius:16px;
+                background:#E6F4EA;
+                border:1px solid #B7E4C7;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+                margin-top:12px;
+                margin-bottom:8px;
+            ">
+              <div style="font-size:18px; font-weight:700; color:#1B4332; margin-bottom:6px;">
+                Reflection Insight
+              </div>
+              <div style="font-size:14px; line-height:1.5; color:#2D6A4F;">
+                {banner_line}
+              </div>
+           </div>
+           """,
+           unsafe_allow_html=True,
+        )
 
         st.divider()
-
         # ----------------------------
         # Build daily series
         # ----------------------------
@@ -1821,43 +1865,49 @@ elif page == "Dashboard":
         )
 elif page == "About":
     st.header("About RevoraAI")
-    
-    st.markdown(
-        "**RevoraAI** is a prototype exploring how structured reflection can reduce session time spent reconstructing context and help clinicians see patterns faster."
-    )
 
     st.markdown(
         """
-It transforms daily check-ins and event-based reflections into visual trends, emotional pattern summaries, and AI-generated clinician-ready insights, all filtered by customizable date ranges.
+RevoraAI is a product prototype exploring how structured reflection can improve therapy outcomes for autistic and neurodivergent adults.
+
+Between sessions, clients often struggle to recall emotional patterns or meaningful events. Clinicians spend valuable time reconstructing context instead of advancing care. RevoraAI aims to reduce that friction by turning daily reflections into clear, actionable insights.
 """
     )
 
-    st.markdown("## What it does")
-
+    st.subheader("What it does")
     st.markdown(
         """
-- Daily check-in (once per day)  
-- Event-based check-ins anytime something shifts  
-- Mood rhythm & engagement analytics  
-- Emotional pattern tracking
-- AI generated user summary  
-- AI-generated session summaries (editable before export)  
-- Clinician-ready PDF export  
+- Daily check-in (one per day anchor)
+- Event-based reflections when something shifts
+- Mood trend and engagement analytics
+- Emotional pattern surfacing
+- AI-generated weekly client summary *(disabled in public demo)*
+- AI-generated clinician session prep (editable) *(disabled in public demo)*
+- Clinician-ready PDF export
 """
     )
 
-    st.markdown("## Tech Stack")
-
+    st.subheader("Role-based design")
     st.markdown(
         """
-**Frontend & App Framework:** Streamlit  
-**Backend & Logic:** Python  
-**Data Processing:** Pandas, NumPy  
-**Visualization:** Altair, Matplotlib  
-**AI Integration:** OpenAI API  
-**Reporting & Export:** ReportLab (PDF generation)  
-**State & Interaction:** Streamlit Session State  
-
-**Built by:** Sanah Murtuza
+RevoraAI separates experiences intentionally:
+- **Check-In**: designed for clients (simple, low-friction logging)
+- **Clinician Summary**: designed for therapists (signal-first session prep)
+- **Dashboard**: shared view for trends (date-range analytics)
 """
     )
+
+    st.subheader("Tech stack")
+    st.markdown(
+        """
+- **Frontend/App:** Streamlit  
+- **Backend:** Python  
+- **Database:** SQLite  
+- **Data:** Pandas  
+- **Visualization:** Altair, Matplotlib  
+- **AI (optional):** OpenAI API  
+- **Exports:** ReportLab (PDF)  
+"""
+    )
+
+    st.caption("Built by Sanah Murtuza.")
