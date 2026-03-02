@@ -1,4 +1,4 @@
-# RevoraAI — Reflection & Clinician Insight Prototype
+# RevoraAI — Self Reflection & Clinician Insight Prototype
 
 Live Demo: https://revoraai.streamlit.app/
 
@@ -32,8 +32,6 @@ If clients can easily log daily reflections and generate structured summaries th
 If clinicians receive clear, range-based insights before sessions, they can spend less time reconstructing context and more time delivering personalized care.
 
 ---
-
-## What This Prototype Includes
 
 ## Role-Based Experience Design
 The prototype separates workflows intentionally:
@@ -80,7 +78,7 @@ In a production setting, these would ladder up to outcome metrics such as:
 - Retention beyond 8 weeks
 - Measurable mood improvement over time
 
-This is intentionally outcome-oriented rather than feature-driven.
+The design prioritizes measurable outcomes over feature density.
 
 ## Key Product Decisions
 
@@ -107,6 +105,14 @@ OPENAI_API_KEY=your_key_here
 2. Run the app locally (see below)
 
 The intent is not to replace clinician judgment, but to augment preparation and surface patterns efficiently.
+
+---
+
+## Data & Privacy
+
+This public demo uses local development data only.  
+AI features are disabled in the deployed version to prevent API key exposure.  
+No real clinical data is stored or transmitted.
 
 ---
 
@@ -150,14 +156,7 @@ Use this data to continuously refine summarization quality and signal extraction
 
 ### 4. AI Companion (Chat Support Layer)
 
-Introduce a structured AI reflection companion to:
-
-- Help users articulate emotions
-- Offer guided reflection prompts
-- Encourage consistent engagement
-- Provide emotional validation without clinical replacement
-
-This would remain supportive, not diagnostic, and would require careful guardrails.
+A structured AI reflection companion could help users articulate emotions, offer guided prompts, and encourage consistency, with strong safety guardrails and non-diagnostic positioning.
 
 ---
 
@@ -192,32 +191,13 @@ Beyond permissions, this would include:
 - HIPAA-aligned storage architecture
 
 In mental health care, trust is infrastructure.  
-Role clarity and data boundaries are not just technical requirements, they are product requirements.
 
 ---
 
 ### 7. Intentional Notification System
 
-In a production environment, I would introduce a notification system designed specifically to avoid overwhelm.
-
-Principles:
-
-- Opt-in by default
-- Customizable frequency (daily, 3x/week, weekly)
-- Tone aligned with neurodivergent-affirming language
-- Smart suppression (pause after multiple missed prompts)
-- Context-aware reminders (e.g., no late-night notifications)
-
-Instead of pushing for maximum engagement, the goal would be:
-
-Sustainable consistency without cognitive overload.
-
-Over time, we could experiment with:
-
-- Personalized reminder timing based on prior engagement
-- “Low-friction” check-in prompts (1-click mood logging)
-- Clinician-triggered reminders when appropriate
-
+Notifications would be opt-in, customizable, and designed to avoid overwhelm.  
+The goal is sustainable consistency, not maximum engagement.
 
 ---
 
@@ -247,9 +227,14 @@ This prototype explores how thoughtful product design, measurable outcomes, and 
 
 It was built to explore product questions, not just demonstrate functionality.
 
-## What This Taught Me
+---
 
-Building this prototype reinforced that in neurodivergent care:
-- Simplicity outperforms feature density.
-- Engagement must be sustainable, not aggressive.
-- AI should augment human care, not replace clinical judgment.
+## Run Locally
+
+1. Clone the repository  
+2. Install dependencies:
+   pip install -r requirements.txt  
+3. (Optional) Add OpenAI key to `.env`:
+   OPENAI_API_KEY=your_key_here  
+4. Run:
+   streamlit run app.py
