@@ -14,7 +14,7 @@ How can we reduce time spent reconstructing context in therapy and increase sign
 
 Click below to view a short walkthrough:
 
-[View Demo Video](https://github.com/sanahmurtuza09/RevoraAI/blob/main/revoraai_demo.gif)
+[revoraai_demo.gif](https://github.com/sanahmurtuza09/RevoraAI/blob/main/revoraai_demo.gif)
 
 ---
 
