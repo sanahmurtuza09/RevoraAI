@@ -10,6 +10,27 @@ How can we reduce time spent reconstructing context in therapy and increase sign
 
 ---
 
+## Interactive Demo
+
+Click below to view a short walkthrough:
+
+[View Demo Video](https://revoraai.streamlit.app/)
+
+---
+
+## Screenshots
+
+- Client Check-In
+![Check-In Screenshot](screenshots/check-in.png)
+
+- Clinician Summary
+![Clinician Screenshot](screenshots/clinician.png)
+
+- Dashboard
+![Dashboard Screenshot](screenshots/dashboard.png)
+
+---
+
 ## Problem
 
 Many autistic and neurodivergent adults find it difficult to track emotions consistently or recall key experiences between sessions. This often leads to:
@@ -176,21 +197,15 @@ AI should support care, not automate it blindly.
 
 ### 6. Role-Based Access & Data Boundaries
 
-If this moved into production, I would introduce formal role-based access controls (RBAC):
+In production, I would implement formal role-based access controls (RBAC):
 
-- Clients see only their own data
-- Clinicians see only assigned client panels
-- Admin roles with limited data visibility
-- Clear separation between personal reflection and clinician-facing summaries
+- Clients access only their own data
+- Clinicians view only assigned client panels
+- Admin roles with restricted visibility
 
-Beyond permissions, this would include:
+This would include consent-based sharing, audit logs, and HIPAA-aligned storage practices.
 
-- Audit logs for data access
-- Consent-based data sharing
-- Session-level access control
-- HIPAA-aligned storage architecture
-
-In mental health care, trust is infrastructure.  
+In mental health care, trust is foundational infrastructure. 
 
 ---
 
