@@ -21,13 +21,13 @@ Click below to view a short walkthrough:
 ## Screenshots
 
 - Client Check-In
-![Check-In Screenshot](screenshots/check-in.png)
+![Check-In Screenshot](https://github.com/sanahmurtuza09/RevoraAI/blob/main/screenshots%3Acheck-in.png)
 
 - Clinician Summary
-![Clinician Screenshot](screenshots/clinician.png)
+![Clinician Screenshot](https://github.com/sanahmurtuza09/RevoraAI/blob/main/screenshots%3Aclinician.png)
 
 - Dashboard
-![Dashboard Screenshot](screenshots/dashboard.png)
+![Dashboard Screenshot](https://github.com/sanahmurtuza09/RevoraAI/blob/main/screenshots%3Adashboard.png)
 
 ---
 
